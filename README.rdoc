@@ -30,4 +30,5 @@ compatibility with ActiveRecord::Base.
 == Copyright
 
 Copyright (c) 2011 {Tim Linquist}[http://github.com/timo3377]
-See {LICENSE}[link:LICENSE] for details.
+
+See link:LICENSE for details.
