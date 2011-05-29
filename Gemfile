@@ -1,5 +1,4 @@
 source :rubygems
-source "http://gems.github.com"
 
 gem 'activerecord', '3.0.7'
 
