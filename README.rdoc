@@ -1,5 +1,34 @@
-== Purpose
+= simple_eav
 
- Provide a simple alternative to acts_as_eav_model that works with ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a model the ability to have any number of custom attributes.  This project has the same goal.  The difference being maintaining utmost compatability with ActiveRecord::Base.
+simple_eav provides a simpler alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
+ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a 
+model the ability to have any number of custom attributes.
+
+This project has the same goal.  The difference being maintaining utmost 
+compatibility with ActiveRecord::Base.
 
 
+== Installation
+  gem install simple_eav
+
+== Contributing
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a
+  future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+  (if you want to have your own version, that is fine but bump version in a
+  commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+
+== Author
+
+{Tim Linquist}[http://github.com/timo3377]
+
+== Copyright
+
+Copyright (c) 2011 {Tim Linquist}[http://github.com/timo3377]
+
+See link:LICENSE for details.
