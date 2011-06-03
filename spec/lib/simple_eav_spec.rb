@@ -11,4 +11,11 @@ describe SimpleEav do
       p.simple_attributes[:name].should eql('John')
     end
   end
+
+  describe "Custom attributes" do
+    it "John knows his name"
+    it "John responds to his name"
+    it "John can change his name"
+    it "John can become John Doe"
+  end
 end
