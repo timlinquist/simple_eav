@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe SimpleEav do
-  before( :each ) do
-    @person = Person.new
+  describe "Configuring a model" do
+    it "with the column to serialize" do
+      Person.simple_eav_column.should eql(:simple_attributes)
+    end
   end
 end

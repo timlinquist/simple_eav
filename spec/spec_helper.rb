@@ -8,14 +8,13 @@ require 'active_record'
 require 'sqlite3'
 require 'logger'
 
-#log all AR output to stdout 
-ActiveRecord::Base.logger = Logger.new(STDERR)
 ActiveRecord::Base.establish_connection({
   :adapter  => 'sqlite3',
   :database => ":memory:"
 })
 load('db/schema.rb')
 
+$:.push File.expand_path("../lib", __FILE__)
 require 'support/person'
 
 RSpec.configure do |config|
