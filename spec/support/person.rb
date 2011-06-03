@@ -4,5 +4,5 @@ require 'simple_eav'
 class Person < ActiveRecord::Base
   include SimpleEav
 
-  set_simple_eav_column :simple_attributes
+  configure_simple_eav :simple_attributes
 end
