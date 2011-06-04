@@ -1,15 +1,47 @@
 = simple_eav
 
-simple_eav provides a simpler alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
+simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
 ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a 
 model the ability to have any number of custom attributes.
 
-This project has the same goal.  The difference being maintaining utmost 
-compatibility with ActiveRecord::Base.
+This project has the same goal.  The difference being maintaining utmost
+compatibility with ActiveRecord::Base.  For this reason, there is one glaring inconsistency between this gem and acts_as_eav_model.
+Acts_as_eav_model overrides attributes to allow you to set any custom attributes. Simple eav does not.  I ommitted this in the interest
+of not having to monkey patch ActiveRecord.
 
+=== Example
+  person = Person.new {:custom_attribute=>'value'} #This does not work in simple_eav
+
+  person = Person.new {:simple_eav_attributes => {:custom_attribute=>'value'} #This does work in simple_eav
+  person.custom_attribute ~> 'value'
+
+The latter works because all simple_eav does is use ActiveRecord's built in serialize mechanism to store a hash of custom attributes.
+So in this example, simple_eav_attributes is a text column in the database for the persons table.  Simple eav then takes of 
+serializing the data for this column and defines setters/getters for your custom values.
 
 == Installation
   gem install simple_eav
+
+== Usage
+=== 1. Create the migration for your model
+
+  create_table :people do |t|
+    t.text  :custom_attributes # Name this column whatever you like just *make sure* it is a TEXT field
+    ....
+  end
+
+=== 2. Configure simple_eav in your model
+
+  class Person < ActiveRecord::Base
+    include SimpleEav
+
+    configure_simple_eav :custom_attributes # This sets up the serialization for your custom attributes
+  end
+
+=== 3. Set and Get custom attributes as if they were normal attribute on your AR model
+  person = Person.new
+  person.name = 'Joe'
+  person.name ~> 'Joe'
 
 == Contributing
 
