@@ -11,15 +11,11 @@ Gem::Specification.new do |s|
   s.summary     = %q{A simple alternative to acts_as_eav_model.}
   s.description = %q{A simple alternative to acts_as_eav_model that works with ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a model the ability to have any number of custom attributes.  This project has the same goal.  The difference being maintaining utmost compatability with ActiveRecord::Base.}
 
-  # s.rubyforge_project = "simple_eav"
-
-  lib_files = ['./lib/simple_eav.rb']
-  s.files         = lib_files
-
-  test_files = ['./spec/lib/simple_eav_spec.rb']
-  s.test_files    = test_files
-  # s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.files            = `git ls-files`.split("\n")
+  s.test_files       = `git ls-files -- {spec,features}/*`.split("\n")
+  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.extra_rdoc_files = [ "README.rdoc" ]
+  s.require_path     = "lib"
 
   s.add_dependency 'activerecord', '~> 3.0.7'
   if RUBY_VERSION < '1.9'
