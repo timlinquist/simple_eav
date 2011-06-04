@@ -39,18 +39,18 @@ This is the only known inconsistency between these two gems. If this is an issue
     configure_simple_eav :custom_attributes # This sets up the serialization for your custom attributes
   end
 
-=== 3. Set and Get custom attributes as if they were normal attribute on your AR model
+=== 3. Set and Get custom attributes as if they were a normal attribute on your model
   person = Person.new
   person.name = 'Joe'
   person.name ~> 'Joe'
 
 == Migrating to simple_eav
-I have not done this yet but will be soon.  I'll update the README once that's complete or let me know what you find if you migrate yours first.
+I have not done this yet but will hopefully be making the transition soon.  I'll update the README once that's complete or let me know what you find if you migrate your project first.
 At the moment, a migration would be needed that:
- - Moved each attribute record to a key => value pair for the simple_eav_column on the model using acts_as_eav_model
- - Destroyed each attribute record
+ - Moves each attribute record to a key => value pair for the simple_eav_column on the model using acts_as_eav_model
+ - Destroys each attribute record
 
-You'd also need to review where your models using acts_as_eav_model were initialized and if they depended on the single incompatibility mentioned above.
+You'd also need to review where your models using acts_as_eav_model are initialized.  If they depended on the single incompatibility mentioned above those calls will need to be updated.
 
 == Contributing
 
