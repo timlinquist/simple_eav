@@ -29,23 +29,22 @@ describe SimpleEav do
   end
 
   describe "A custom attribute" do
-    describe "Person" do
+    describe "John is a Person" do
       before( :each ) do
         @person = Person.new
       end
-      it "John knows his name" do
+      it "who knows his name" do
         @person.name = 'John'
         @person.name.should eql('John')
       end
 
-      it "John responds to his name" do
-        pending
+      it "who responds to his name" do
         @person.name = 'John'
         @person.respond_to?(:name).should be_true
       end
 
-      it "John can change his name"
-      it "John can become John Doe"
+      it "who can change his name"
+      it "who can become John Doe"
     end
   end
 end

@@ -26,6 +26,10 @@ module SimpleEav
     self.send("#{simple_eav_column}=", attributes)
   end
 
+  def respond_to?(method, include_private=false)
+    super || simple_eav_attributes.has_key?(method)
+  end
+
   def method_missing(method, *args, &block)
     if method.to_s =~ /=$/
       _attributes = self.simple_eav_attributes
@@ -33,9 +37,9 @@ module SimpleEav
       _attributes[setter.to_sym] = args.shift
       self.simple_eav_attributes = _attributes
     elsif simple_eav_attributes.has_key?(method.to_sym)
-      self.simple_eav_attributes[method.to_sym]
+      simple_eav_attributes[method.to_sym]
     else
-      super method, *args, &block
+      super(method, *args, &block)
     end
   end
 end
