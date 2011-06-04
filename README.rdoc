@@ -72,4 +72,4 @@ You'd also need to review where your models using acts_as_eav_model are initiali
 
 Copyright (c) 2011 {Tim Linquist}[http://github.com/timo3377]
 
-See link:LICENSE for details.
+See {LICENSE}[http://github.com/timo3377/simple_eav] for details.
