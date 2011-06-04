@@ -12,6 +12,27 @@ describe SimpleEav do
     end
   end
 
+  describe "Expected ActiveRecord behavior" do
+    it "set all of the attributes" do
+      person = Person.create!({
+        :age=>'John Johnson',
+        :simple_attributes=>{
+          :name=>'John'
+        }
+      })
+      person.age.should eql('John Johnson')
+      person.name.should eql('John')
+    end
+    it "serialize and deserialize the simple_eav attributes" do
+      person = Person.new({:simple_attributes=>{
+        :name=>'John'
+      }})
+      person.save!
+      person.reload
+      person.name.should eql('John')
+    end
+  end
+
   describe "A missing attribute" do
     before( :each ) do
       @person = Person.new
@@ -38,13 +59,20 @@ describe SimpleEav do
         @person.name.should eql('John')
       end
 
+      it "who can change his name" do
+        @person.name = 'John'
+        @person.name = 'Joe'
+        @person.name.should eql('Joe')
+      end
+
       it "who responds to his name" do
         @person.name = 'John'
         @person.respond_to?(:name).should be_true
       end
 
-      it "who can change his name"
-      it "who can become John Doe"
+      it "who doesn't respond to someone else's name" do
+        @person.respond_to?(:someone_elses_name).should be_false
+      end
     end
   end
 end
