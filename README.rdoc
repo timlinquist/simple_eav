@@ -1,12 +1,11 @@
 = simple_eav
 
 simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
-ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a 
-model the ability to have any number of custom attributes.
+ActiveRecord without any monkey patching.  This gem is designed to be a replacement for acts_as_eav_model.
 
-This project has the same goal.  The difference being maintaining utmost
+Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost
 compatibility with ActiveRecord::Base.  For this reason, there is one glaring inconsistency between this gem and acts_as_eav_model.
-Acts_as_eav_model overrides attributes to allow you to set any custom attributes. Simple eav does not.  I ommitted this in the interest
+Acts_as_eav_model overrides attributes (among other functionality) to allow you to set any custom attributes. Simple eav does not.  I ommitted this in the interest
 of not having to monkey patch ActiveRecord.
 
 === Example
@@ -16,8 +15,10 @@ of not having to monkey patch ActiveRecord.
   person.custom_attribute ~> 'value'
 
 The latter works because all simple_eav does is use ActiveRecord's built in serialize mechanism to store a hash of custom attributes.
-So in this example, simple_eav_attributes is a text column in the database for the persons table.  Simple eav then takes of 
+So in this example, simple_eav_attributes is a text column in the database for the persons table.  Simple eav then takes of
 serializing the data for this column and defines setters/getters for your custom values.
+
+This is the only known inconsistency between these two gems. If this is an issue in your project please let me know.
 
 == Installation
   gem install simple_eav
@@ -42,6 +43,14 @@ serializing the data for this column and defines setters/getters for your custom
   person = Person.new
   person.name = 'Joe'
   person.name ~> 'Joe'
+
+== Migrating to simple_eav
+I have not done this yet but will be soon.  I'll update the README once that's complete or let me know what you find if you migrate yours first.
+At the moment, a migration would be needed that:
+ - Moved each attribute record to a key => value pair for the simple_eav_column on the model using acts_as_eav_model
+ - Destroyed each attribute record
+
+You'd also need to review where your models using acts_as_eav_model were initialized and if they depended on the single incompatibility mentioned above.
 
 == Contributing
 
