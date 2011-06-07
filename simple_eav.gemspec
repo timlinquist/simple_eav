@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = SimpleEav::VERSION
   s.authors     = ["Tim Linquist"]
   s.email       = ["tim.linquist@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = %q{http://github.com/timo3377/simple_eav}
   s.summary     = %q{A simple alternative to acts_as_eav_model.}
   s.description = %q{A simple alternative to acts_as_eav_model that works with ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a model the ability to have any number of custom attributes.  This project has the same goal.  The difference being maintaining utmost compatability with ActiveRecord::Base.}
 
