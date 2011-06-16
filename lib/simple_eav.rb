@@ -17,6 +17,10 @@ module SimpleEav
   def simple_eav_column
     self.class.simple_eav_column
   end
+  
+  def actual_columns_of_table
+    self.class.columns.map{|col| col.name.to_sym }
+  end
 
   def simple_eav_attributes
     self.send(simple_eav_column.to_sym) || {}
@@ -24,6 +28,20 @@ module SimpleEav
 
   def simple_eav_attributes=(attributes={})
     self.send("#{simple_eav_column}=", attributes)
+  end
+  
+  def attributes=(_attributes={})
+    #Iterate over each attribute:
+    # - skip columns that are actually defined in the db
+    # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
+    simple_eav_attrs = read_attribute(:simple_eav_column) || {}
+    _attributes.each do |column,value|
+      next if actual_columns_of_table.include?(column)
+      simple_eav_attrs[column] = value 
+      _attributes.delete(column)
+    end
+    self.simple_eav_attributes = simple_eav_attrs
+    super(_attributes)
   end
 
   def respond_to?(method, include_private=false)

@@ -13,17 +13,52 @@ describe SimpleEav do
   end
 
   describe "Expected ActiveRecord behavior" do
-    it "set all of the attributes" do
+    describe "given a hash of undefined attributes" do
+      it "creates a person with a name" do
+        person = Person.create(:name=>'Joseph')
+        person.name.should eql 'Joseph'
+      end
+      it "saves the person's name" do
+        person = Person.new(:name=>'Jeremiah')
+        person.save!
+        person.reload
+        person.name.should eql 'Jeremiah'
+      end
+      it "updates the person's name" do
+        person = Person.create(:name=>'Joseph')
+        person.update_attributes(:name=>'Joe')
+        person.name.should eql 'Joe'
+      end
+      it "initializes the person with a name" do
+        person = Person.new(:name=>'John')
+        person.name.should eql 'John'
+      end
+    end
+    describe "given a hash of defined attributes" do
+      it "updates the person's age" do
+        person = Person.create(:age=>98)
+        person.update_attributes(:age=>99)
+        person.save!
+        person.reload
+        person.age.to_i.should eql 99
+      end
+      it "does not set the age in the simple eav attributes" do
+        person = Person.create(:age=>97, :new_age=>98)
+        person.simple_eav_attributes.should_not have_key :age
+        person.simple_eav_attributes.should have_key :new_age
+      end
+    end
+    it "sets all of the attributes" do
       person = Person.create!({
-        :age=>'John Johnson',
+        :age=>99,
         :simple_attributes=>{
           :name=>'John'
         }
       })
-      person.age.should eql('John Johnson')
+      person.age.should eql(99)
       person.name.should eql('John')
     end
-    it "serialize and deserialize the simple_eav attributes" do
+    it "serializes and deserializes the simple_eav attributes" do
       person = Person.new({:simple_attributes=>{
         :name=>'John'
       }})
