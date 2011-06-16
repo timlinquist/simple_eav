@@ -3,22 +3,11 @@
 simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
 ActiveRecord without any monkey patching.  This gem is designed to be a replacement for acts_as_eav_model.
 
-Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost
-compatibility with ActiveRecord::Base.  For this reason, there is one glaring inconsistency between this gem and acts_as_eav_model.
-Acts_as_eav_model overrides attributes (among other functionality) to allow you to set any custom attributes. Simple eav does not.  I ommitted this in the interest
-of not having to monkey patch ActiveRecord.
+Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost compatibility with ActiveRecord::Base.  
 
-=== Example
-  person = Person.new {:custom_attribute=>'value'} #This does not work in simple_eav
+Version 0.1.0 makes this library, to my knowledge, fully compatible with acts_as_eav_model.  This update introduced the ability to specify custom attributes exactly the same as attributes with an actual column in the database ie:
 
-  person = Person.new {:simple_eav_attributes => {:custom_attribute=>'value'} #This does work in simple_eav
-  person.custom_attribute ~> 'value'
-
-The latter works because all simple_eav does is use ActiveRecord's built in serialize mechanism to store a hash of custom attributes.
-So in this example, simple_eav_attributes is a text column in the database for the persons table.  Simple eav then takes of
-serializing the data for this column and defines setters/getters for your custom values.
-
-This is the only known inconsistency between these two gems. If this is an issue in your project please let me know.
+  Person.create :attribute_with_column=>true, :attribute_without_column=>true
 
 == Installation
   gem install simple_eav
@@ -43,14 +32,16 @@ This is the only known inconsistency between these two gems. If this is an issue
   person = Person.new
   person.name = 'Joe'
   person.name ~> 'Joe'
+  
+  person = Person.new :name => 'Joe'
+  person.save!
+  person.name ~> 'Joe'
 
 == Migrating to simple_eav
 I have not done this yet but will hopefully be making the transition soon.  I'll update the README once that's complete or let me know what you find if you migrate your project first.
 At the moment, a migration would be needed that:
  - Moves each attribute record to a key => value pair for the simple_eav_column on the model using acts_as_eav_model
  - Destroys each attribute record
-
-You'd also need to review where your models using acts_as_eav_model are initialized.  If they depended on the single incompatibility mentioned above those calls will need to be updated.
 
 == Contributing
 
