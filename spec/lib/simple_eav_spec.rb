@@ -83,6 +83,18 @@ describe SimpleEav do
       end
     end
   end
+  
+  describe "Adding an attribute with existing attributes" do
+    before(:each) do
+      @person = Person.create! :name=>'Jim'
+    end
+    
+    it "updates the attributes without removing the old" do
+      @person.update_attributes :cell_number => 911
+      @person.name.should eql('Jim')
+      @person.cell_number.should eql(911)
+    end
+  end
 
   describe "A custom attribute" do
     describe "John is a Person" do

@@ -5,9 +5,7 @@ module SimpleEav
       serialize @@column
     end
 
-    def simple_eav_column
-      @@column if defined? @@column
-    end
+    def simple_eav_column; @@column end
   end
 
   def self.included(base)
@@ -15,7 +13,7 @@ module SimpleEav
   end
 
   def simple_eav_column
-    self.class.simple_eav_column
+    self.class.simple_eav_column 
   end
   
   def actual_columns_of_table
@@ -33,8 +31,8 @@ module SimpleEav
   def attributes=(_attributes={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
-    # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
-    simple_eav_attrs = read_attribute(:simple_eav_column) || {}
+    # - remove undefined columns to prevent UnknownAttribute::Error from being thrown    
+    simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
       next if actual_columns_of_table.include?(column)
       simple_eav_attrs[column] = value 
