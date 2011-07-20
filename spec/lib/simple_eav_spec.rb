@@ -67,6 +67,13 @@ describe SimpleEav do
       person.name.should eql('John')
     end
   end
+  
+  describe "#method_missing" do
+    it "does not reference the eav_column directly (causes stack overflow error)" do
+      person = Person.new
+      lambda{ person.name = 'John' }.should_not raise_error(SystemStackError)
+    end
+  end
 
   describe "A missing attribute" do
     before( :each ) do

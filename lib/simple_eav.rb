@@ -48,7 +48,7 @@ module SimpleEav
 
   def method_missing(method, *args, &block)
     if method.to_s =~ /=$/
-      _attributes = self.simple_eav_attributes
+      _attributes = read_attribute(simple_eav_column.to_sym) || {}
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
       self.simple_eav_attributes = _attributes
