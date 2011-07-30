@@ -13,6 +13,10 @@ describe SimpleEav do
   end
 
   describe "Expected ActiveRecord behavior" do
+    it "handles an empty string of attributes" do
+      person = Person.create(:simple_attributes=>'')
+      person.should_not be_new_record
+    end
     describe "given a hash of undefined attributes" do
       it "creates a person with a name" do
         person = Person.create(:name=>'Joseph')

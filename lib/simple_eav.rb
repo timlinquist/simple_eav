@@ -21,7 +21,8 @@ module SimpleEav
   end
 
   def simple_eav_attributes
-    self.send(simple_eav_column.to_sym) || {}
+    _attributes = self.send(simple_eav_column.to_sym)
+    _attributes.is_a?(Hash) ? _attributes : {}
   end
 
   def simple_eav_attributes=(attributes={})
@@ -47,13 +48,13 @@ module SimpleEav
   end
 
   def method_missing(method, *args, &block)
+    _attributes = read_attribute(simple_eav_column.to_sym) || {}
     if method.to_s =~ /=$/
-      _attributes = read_attribute(simple_eav_column.to_sym) || {}
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
-      self.simple_eav_attributes = _attributes
-    elsif simple_eav_attributes.has_key?(method.to_sym)
-      simple_eav_attributes[method.to_sym]
+      return self.simple_eav_attributes = _attributes
+    elsif _attributes.has_key?(method.to_sym)
+     return  _attributes[method.to_sym]
     else
       super(method, *args, &block)
     end
