@@ -13,9 +13,31 @@ describe SimpleEav do
   end
 
   describe "Expected ActiveRecord behavior" do
-    it "handles an empty string of attributes" do
-      person = Person.create(:simple_attributes=>'')
-      person.should_not be_new_record
+    describe "common" do
+      it "handles an empty string of attributes" do
+        person = Person.create(:simple_attributes=>'')
+        person.should_not be_new_record
+      end
+      it "sets all of the attributes" do
+        person = Person.create!({
+          :age=>99,
+          :simple_attributes=>{
+            :name=>'John'
+          }
+        })
+        person.age.should eql(99)
+        person.name.should eql('John')
+      end
+    end
+    describe "serialization" do
+      it "serializes and deserializes the simple_eav attributes" do
+        person = Person.new({:simple_attributes=>{
+          :name=>'John'
+        }})
+        person.save!
+        person.reload
+        person.name.should eql('John')
+      end
     end
     describe "given a hash of undefined attributes" do
       it "creates a person with a name" do
@@ -52,30 +74,31 @@ describe SimpleEav do
         person.simple_eav_attributes.should have_key :new_age
       end
     end
-    it "sets all of the attributes" do
-      person = Person.create!({
-        :age=>99,
-        :simple_attributes=>{
-          :name=>'John'
-        }
-      })
-      person.age.should eql(99)
-      person.name.should eql('John')
-    end
-    it "serializes and deserializes the simple_eav attributes" do
-      person = Person.new({:simple_attributes=>{
-        :name=>'John'
-      }})
-      person.save!
-      person.reload
-      person.name.should eql('John')
-    end
   end
   
   describe "#method_missing" do
     it "does not reference the eav_column directly (causes stack overflow error)" do
       person = Person.new
       lambda{ person.name = 'John' }.should_not raise_error(SystemStackError)
+    end
+  end
+
+  describe "#respond_to" do
+    before(:each) do
+      @person = Person.new
+    end
+
+    it "the defined attribute `age` is responded to" do
+      @person.respond_to?(:age).should be_true
+    end
+
+    it "the custome attribute `name` is responded to" do
+      @person.name = 'John'
+      @person.respond_to?(:name).should be_true
+    end
+
+    it "someone else's name is not responded to" do
+      @person.respond_to?(:someone_elses_name).should be_false
     end
   end
 
@@ -121,15 +144,6 @@ describe SimpleEav do
         @person.name = 'John'
         @person.name = 'Joe'
         @person.name.should eql('Joe')
-      end
-
-      it "who responds to his name" do
-        @person.name = 'John'
-        @person.respond_to?(:name).should be_true
-      end
-
-      it "who doesn't respond to someone else's name" do
-        @person.respond_to?(:someone_elses_name).should be_false
       end
     end
   end

@@ -44,7 +44,8 @@ module SimpleEav
   end
 
   def respond_to?(method, include_private=false)
-    super || simple_eav_attributes.has_key?(method)
+    return true if super
+    simple_eav_attributes.has_key?(method)
   end
 
   def method_missing(method, *args, &block)
