@@ -17,13 +17,17 @@ describe SimpleEav do
       @child = Child.create
       @person = Person.create(:child=>@child)
     end
+    it "knows the nested attributes of the object" do
+      @person.send(:nested_attributes).should include(:child_attributes)
+    end
     it "knows the associations of the object" do
       @person.send(:associations_of_class).should include(:child)
     end
     it "knows the reserved attributes" do
       @person.should_receive(:associations_of_class).and_return([:child])
       @person.should_receive(:actual_columns_of_table).and_return([:name])
-      @person.reserved_attributes.should eql([:child, :name])
+      @person.should_receive(:nested_attributes).and_return([:child_attributes])
+      @person.reserved_attributes.should eql([:child, :name, :child_attributes])
     end
     it "does not accept reserved attributes for eav" do
       @person.should_receive(:reserved_attributes).and_return([:name, :number])
@@ -56,6 +60,21 @@ describe SimpleEav do
       it "assigns the has_one" do
         @person.simple_eav_attributes.should_not have_key(:child)
         @person.child.should eql(@child)
+      end
+      it "assigns the has_one via the accessor" do
+        @person.child = @child
+        @person.save!
+        @person.simple_eav_attributes.should_not have_key(:child)
+        @person.child.should eql(@child)
+      end
+    end
+    describe "nested attributes" do
+      it "nests the attributes properly" do
+        child = Child.create :name=>'Joe Jr.'
+        person = Person.create :child=>child
+        lambda{
+         person.update_attributes :child_attributes=>{:name=>'John Jr.'}
+        }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
       end
     end
     describe "serialization" do

@@ -17,6 +17,10 @@ module SimpleEav
   end
 
   private
+  def nested_attributes
+    associations_of_class.map{|assoc| "#{assoc}_attributes".to_sym }
+  end
+
   def associations_of_class
     self.class.reflect_on_all_associations.map{|assoc| assoc.name.to_sym }
   end
@@ -27,7 +31,7 @@ module SimpleEav
 
   public
   def reserved_attributes
-    associations_of_class + actual_columns_of_table
+    associations_of_class + actual_columns_of_table + nested_attributes
   end
 
   def reserved_attribute?(attribute)
