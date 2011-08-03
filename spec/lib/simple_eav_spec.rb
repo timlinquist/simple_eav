@@ -12,6 +12,25 @@ describe SimpleEav do
     end
   end
 
+  describe "Reserved attributes" do
+    before(:each) do
+      @child = Child.create
+      @person = Person.create(:child=>@child)
+    end
+    it "knows the associations of the object" do
+      @person.send(:associations_of_class).should include(:child)
+    end
+    it "knows the reserved attributes" do
+      @person.should_receive(:associations_of_class).and_return([:child])
+      @person.should_receive(:actual_columns_of_table).and_return([:name])
+      @person.reserved_attributes.should eql([:child, :name])
+    end
+    it "does not accept reserved attributes for eav" do
+      @person.should_receive(:reserved_attributes).and_return([:name, :number])
+      @person.reserved_attribute?(:name).should be_true
+    end
+  end
+
   describe "Expected ActiveRecord behavior" do
     describe "common" do
       it "handles an empty string of attributes" do
@@ -27,6 +46,16 @@ describe SimpleEav do
         })
         person.age.should eql(99)
         person.name.should eql('John')
+      end
+    end
+    describe "associations" do
+      before(:each) do
+        @child = Child.create
+        @person = Person.create(:child=>@child)
+      end
+      it "assigns the has_one" do
+        @person.simple_eav_attributes.should_not have_key(:child)
+        @person.child.should eql(@child)
       end
     end
     describe "serialization" do

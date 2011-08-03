@@ -16,8 +16,22 @@ module SimpleEav
     self.class.simple_eav_column
   end
 
+  private
+  def associations_of_class
+    self.class.reflect_on_all_associations.map{|assoc| assoc.name.to_sym }
+  end
+
   def actual_columns_of_table
     self.class.columns.map{|col| col.name.to_sym }
+  end
+
+  public
+  def reserved_attributes
+    associations_of_class + actual_columns_of_table
+  end
+
+  def reserved_attribute?(attribute)
+    reserved_attributes.include?(attribute)
   end
 
   def simple_eav_attributes
@@ -35,7 +49,7 @@ module SimpleEav
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
-      next if actual_columns_of_table.include?(column)
+      next if reserved_attribute?(column.to_sym)
       simple_eav_attrs[column] = value
       _attributes.delete(column)
     end
@@ -44,7 +58,7 @@ module SimpleEav
   end
 
   def respond_to?(method, include_private=false)
-    return true if super
+    return true if super(method, include_private)
     simple_eav_attributes.has_key?(method)
   end
 
