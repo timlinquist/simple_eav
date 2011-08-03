@@ -16,6 +16,7 @@ load('db/schema.rb')
 
 $:.push File.expand_path("../lib", __FILE__)
 require 'support/person'
+require 'support/child'
 
 RSpec.configure do |config|
   config.mock_with :rspec
