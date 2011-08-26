@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_path     = "lib"
 
   s.add_dependency 'activerecord', '~> 3.0.7'
-  if RUBY_VERSION < '1.9'
+  if RUBY_VERSION <= '1.9.1'
     s.add_development_dependency 'ruby-debug'
   else
     s.add_development_dependency 'ruby-debug19'
