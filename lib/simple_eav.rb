@@ -46,7 +46,7 @@ module SimpleEav
   def simple_eav_attributes=(attributes={})
     self.send("#{simple_eav_column}=", attributes)
   end
-
+=begin
   def attributes=(_attributes={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
@@ -60,7 +60,7 @@ module SimpleEav
     self.simple_eav_attributes = simple_eav_attrs
     super(_attributes)
   end
-  
+=end  
   def assign_attributes(_attributes={})
     puts "\n\n\n\n I am assign Attributes!!! \n\n\n\n\n"
     #Iterate over each attribute:
