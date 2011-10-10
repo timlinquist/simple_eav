@@ -60,6 +60,21 @@ module SimpleEav
     self.simple_eav_attributes = simple_eav_attrs
     super(_attributes)
   end
+  
+  def assign_attributes(_attributes={})
+    puts "\n\n\n\n I am assign Attributes!!! \n\n\n\n\n"
+    #Iterate over each attribute:
+    # - skip columns that are actually defined in the db
+    # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
+    simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
+    _attributes.each do |column,value|
+      next if reserved_attribute?(column.to_sym)
+      simple_eav_attrs[column] = value
+      _attributes.delete(column)
+    end
+    self.simple_eav_attributes = simple_eav_attrs
+    super(_attributes)
+  end
 
   def respond_to?(method, include_private=false)
     return true if super(method, include_private)
