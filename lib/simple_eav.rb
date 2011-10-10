@@ -47,11 +47,11 @@ module SimpleEav
     self.send("#{simple_eav_column}=", attributes)
   end
 
-  def attributes=(_attributes={})
+  def assign_attributes(_attributes, options={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
-    puts "\n\n\n\n\n\n I AM Attributes= BEING CALLED \n\n\n\n\n"
+    puts "\n\n\n\n\n\n I AM Assign Attributes BEING CALLED \n\n\n\n\n"
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
       next if reserved_attribute?(column.to_sym)
