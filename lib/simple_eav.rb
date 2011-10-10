@@ -47,7 +47,7 @@ module SimpleEav
     self.send("#{simple_eav_column}=", attributes)
   end
 
-  def attributes=(_attributes={})
+  def attributs=(_attributes={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
@@ -68,7 +68,7 @@ module SimpleEav
 
   def method_missing(method, *args, &block)
     _attributes = read_attribute(simple_eav_column.to_sym) || {}
-    puts "\n\n\n\n\n I am Being Called in Rails 3.0.10 \n\n\n\n\n"
+    puts "\n\n\n\n\n I am Method Missing Being Called in Rails 3.0.10 \n\n\n\n\n"
     if method.to_s =~ /=$/
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
