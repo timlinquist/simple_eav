@@ -51,7 +51,6 @@ module SimpleEav
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
-    puts "\n\n\n\n\n\n I AM Assign Attributes BEING CALLED \n\n\n\n\n"
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
       next if reserved_attribute?(column.to_sym)
@@ -69,7 +68,6 @@ module SimpleEav
 
   def method_missing(method, *args, &block)
     _attributes = read_attribute(simple_eav_column.to_sym) || {}
-    puts "\n\n\n\n\n\n I AM METHOD MISSING BEING CALLED \n\n\n\n\n"
     if method.to_s =~ /=$/
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
