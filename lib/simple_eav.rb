@@ -83,7 +83,7 @@ module SimpleEav
 
   def method_missing(method, *args, &block)
     _attributes = read_attribute(simple_eav_column.to_sym) || {}
-    puts "\n\n\n\n\n\n I AM BEING CALLED BITCHES \n\n\n\n\n"
+    puts "\n\n\n\n\n\n I AM METHID MISSING BEING CALLED \n\n\n\n\n"
     if method.to_s =~ /=$/
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
