@@ -67,13 +67,13 @@ module SimpleEav
   end
 
   def method_missing(method, *args, &block)
-    _attributes = read_attribute(simple_eav_column.to_sym) || {}
+    _attributes = read_attribute(simple_eav_column.to_sym) || {}  
     if method.to_s =~ /=$/
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
       return self.simple_eav_attributes = _attributes
-    elsif _attributes.has_key?(method.to_sym)
-     return  _attributes[method.to_sym]
+    elsif _attributes.has_key?(method.to_sym) || _attributes.has_key?(method.to_s)
+     return  _attributes[method.to_sym] || _attributes[method.to_s]
     else
       super(method, *args, &block)
     end
