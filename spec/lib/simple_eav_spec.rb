@@ -144,7 +144,7 @@ describe SimpleEav do
       @person.respond_to?(:age).should be_true
     end
 
-    it "the custome attribute `name` is responded to" do
+    it "the custom attribute `name` is responded to" do
       @person.name = 'John'
       @person.respond_to?(:name).should be_true
     end
