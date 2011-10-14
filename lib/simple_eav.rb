@@ -54,7 +54,7 @@ module SimpleEav
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
       next if reserved_attribute?(column.to_sym)
-      simple_eav_attrs[column] = value
+      simple_eav_attrs[column.to_sym] = value
       _attributes.delete(column)
     end
     self.simple_eav_attributes = simple_eav_attrs
@@ -72,8 +72,8 @@ module SimpleEav
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift
       return self.simple_eav_attributes = _attributes
-    elsif _attributes.has_key?(method.to_sym) || _attributes.has_key?(method.to_s)
-     return  _attributes[method.to_sym] || _attributes[method.to_s]
+    elsif _attributes.has_key?(method.to_sym)
+     return  _attributes[method.to_sym]
     else
       super(method, *args, &block)
     end
