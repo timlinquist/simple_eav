@@ -47,14 +47,14 @@ module SimpleEav
     self.send("#{simple_eav_column}=", attributes)
   end
 
-  def attributes=(_attributes={})
+  def assign_attributes(_attributes, options={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
       next if reserved_attribute?(column.to_sym)
-      simple_eav_attrs[column] = value
+      simple_eav_attrs[column.to_sym] = value
       _attributes.delete(column)
     end
     self.simple_eav_attributes = simple_eav_attrs
@@ -67,7 +67,7 @@ module SimpleEav
   end
 
   def method_missing(method, *args, &block)
-    _attributes = read_attribute(simple_eav_column.to_sym) || {}
+    _attributes = read_attribute(simple_eav_column.to_sym) || {}  
     if method.to_s =~ /=$/
       setter = method.to_s.gsub(/=/, '')
       _attributes[setter.to_sym] = args.shift

@@ -69,12 +69,16 @@ describe SimpleEav do
       end
     end
     describe "nested attributes" do
-      it "nests the attributes properly" do
+      it "updates the nested attributes properly" do
         child = Child.create :name=>'Joe Jr.'
         person = Person.create :child=>child
-        lambda{
-         person.update_attributes :child_attributes=>{:name=>'John Jr.'}
-        }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
+        person.child.name.should == 'Joe Jr.'
+        
+        person.update_attributes :child_attributes=>{:name=>'John Jr.'}
+        person.child.name.should == 'John Jr.'
+#        lambda{
+#         person.update_attributes :child_attributes=>{:name=>'John Jr.'}
+#        }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
       end
     end
     describe "serialization" do
@@ -140,7 +144,7 @@ describe SimpleEav do
       @person.respond_to?(:age).should be_true
     end
 
-    it "the custome attribute `name` is responded to" do
+    it "the custom attribute `name` is responded to" do
       @person.name = 'John'
       @person.respond_to?(:name).should be_true
     end
