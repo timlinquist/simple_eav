@@ -72,13 +72,9 @@ describe SimpleEav do
       it "updates the nested attributes properly" do
         child = Child.create :name=>'Joe Jr.'
         person = Person.create :child=>child
-        person.child.name.should == 'Joe Jr.'
-        
-        person.update_attributes :child_attributes=>{:name=>'John Jr.'}
-        person.child.name.should == 'John Jr.'
-#        lambda{
-#         person.update_attributes :child_attributes=>{:name=>'John Jr.'}
-#        }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
+        lambda{
+         person.update_attributes :child_attributes=>{:id => child.id, :name=>'John Jr.'}
+        }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
       end
     end
     describe "serialization" do

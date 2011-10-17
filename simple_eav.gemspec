@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [ "README.rdoc" ]
   s.require_path     = "lib"
 
-  s.add_dependency 'activerecord', '~> 3.1.0'
+  s.add_dependency 'activerecord', '~> 3.1'
+
   unless ENV["CI"]
     if RUBY_VERSION <= '1.9.1'
       s.add_development_dependency 'ruby-debug'
