@@ -1,11 +1,14 @@
 = simple_eav
 
+== UPDATE
+  Version 1.0.0, is only compatible with >= 3.1. If you are still bound to < 3.1 please use an older version of this gem.
+
 simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with
 ActiveRecord without any monkey patching.  This gem is designed to be a replacement for acts_as_eav_model.
 
 Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost compatibility with ActiveRecord::Base.
 
-Version 0.1.0 makes this library, to my knowledge, fully compatible with acts_as_eav_model.  This update introduced the ability to specify custom attributes exactly the same as attributes with an actual column in the database ie:
+This library, to my knowledge, is fully compatible with acts_as_eav_model.  This update introduced the ability to specify custom attributes exactly the same as attributes with an actual column in the database ie:
 
   Person.create :attribute_with_column=>true, :attribute_without_column=>true
 
@@ -36,12 +39,6 @@ Version 0.1.0 makes this library, to my knowledge, fully compatible with acts_as
   person = Person.new :name => 'Joe'
   person.save!
   person.name ~> 'Joe'
-
-== Migrating to simple_eav
-I have not done this yet but will hopefully be making the transition soon.  I'll update the README once that's complete or let me know what you find if you migrate your project first.
-At the moment, a migration would be needed that:
- - Moves each attribute record to a key => value pair for the simple_eav_column on the model using acts_as_eav_model
- - Destroys each attribute record
 
 == Contributing
 
