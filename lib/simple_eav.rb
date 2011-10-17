@@ -46,8 +46,8 @@ module SimpleEav
   def simple_eav_attributes=(attributes={})
     self.send("#{simple_eav_column}=", attributes)
   end
-
-  def attributs=(_attributes={})
+  
+  def assign_attributes(_attributes={}, options={})
     #Iterate over each attribute:
     # - skip columns that are actually defined in the db
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
@@ -58,7 +58,7 @@ module SimpleEav
       _attributes.delete(column)
     end
     self.simple_eav_attributes = simple_eav_attrs
-    super(_attributes)
+    super(_attributes, options)
   end
 
   def respond_to?(method, include_private=false)

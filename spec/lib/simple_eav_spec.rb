@@ -73,7 +73,7 @@ describe SimpleEav do
         child = Child.create :name=>'Joe Jr.'
         person = Person.create :child=>child
         lambda{
-         person.update_attributes :child_attributes=>{:name=>'John Jr.'}
+         person.update_attributes :child_attributes=>{:id => child.id, :name=>'John Jr.'}
         }.should change(person.child, :name).from('Joe Jr.').to('John Jr.')
       end
     end
