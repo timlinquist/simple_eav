@@ -1,9 +1,9 @@
 = simple_eav
 
-simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with 
+simple_eav provides a more simple alternative to {acts_as_eav_model}[https://github.com/visfleet/acts_as_eav_model] that works with
 ActiveRecord without any monkey patching.  This gem is designed to be a replacement for acts_as_eav_model.
 
-Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost compatibility with ActiveRecord::Base.  
+Acts_as_eav_model's purpose is to provide a model with any number of custom attributes.  This project has the same purpose.  The difference being maintaining utmost compatibility with ActiveRecord::Base.
 
 Version 0.1.0 makes this library, to my knowledge, fully compatible with acts_as_eav_model.  This update introduced the ability to specify custom attributes exactly the same as attributes with an actual column in the database ie:
 
@@ -32,7 +32,7 @@ Version 0.1.0 makes this library, to my knowledge, fully compatible with acts_as
   person = Person.new
   person.name = 'Joe'
   person.name ~> 'Joe'
-  
+
   person = Person.new :name => 'Joe'
   person.save!
   person.name ~> 'Joe'
