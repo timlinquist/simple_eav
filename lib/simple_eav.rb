@@ -38,7 +38,7 @@ module SimpleEav
     reserved_attributes.include?(attribute)
   end
   
-  def multi_paramater_attribute?(attribute)
+  def multi_parameter_attribute?(attribute)
     attribute.include?("(")
   end
 
@@ -57,7 +57,7 @@ module SimpleEav
     # - remove undefined columns to prevent UnknownAttribute::Error from being thrown
     simple_eav_attrs = read_attribute(simple_eav_column.to_sym) || {}
     _attributes.each do |column,value|
-      next if reserved_attribute?(column.to_sym) || multi_paramater_attribute?(column.to_s)
+      next if reserved_attribute?(column.to_sym) || multi_parameter_attribute?(column.to_s)
       simple_eav_attrs[column.to_sym] = value
       _attributes.delete(column)
     end
