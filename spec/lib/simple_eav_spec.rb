@@ -33,6 +33,37 @@ describe SimpleEav do
       @person.should_receive(:reserved_attributes).and_return([:name, :number])
       @person.reserved_attribute?(:name).should be_true
     end
+    it "knows dates as multi parameter attributes" do
+      params = {
+        "age"=>"19",
+        "date_of_birth(1i)" => "1980",
+        "date_of_birth(2i)" => "12",
+        "date_of_birth(3i)" => "23"
+      }
+      person = Person.create!(params)
+      person.date_of_birth.should be_a_kind_of(Date)
+      person.date_of_birth.to_s.should eql('1980-12-23')
+    end
+    
+    it "knows datetimes as multi parameter attributes" do
+      params = {
+        "age"=>"19",
+        "start_at(1i)" => "1998",
+        "start_at(2i)" => "04",
+        "start_at(3i)" => "17",
+        "start_at(4i)" => "08",
+        "start_at(5i)" => "30"
+        
+      }
+      person = Person.create!(params)
+      person.start_at.should be_a_kind_of(Time)
+      person.start_at.day.should eql(17)
+      person.start_at.month.should eql(4)
+      person.start_at.year.should eql(1998)
+      person.start_at.hour.should eql(8)
+      person.start_at.min.should eql(30)
+      
+    end
   end
 
   describe "Expected ActiveRecord behavior" do
