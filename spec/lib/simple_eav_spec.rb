@@ -116,6 +116,17 @@ describe SimpleEav do
         person.reload
         person.age.to_i.should eql 99
       end
+
+      it "sets the person's height with a string for the key" do
+        person = Person.create 'height' => "6'1"
+        person.height.should == "6'1"
+      end
+
+      it "sets the person's height with a symbol for the key" do
+        person = Person.create :height => "6'1"
+        person.height.should == "6'1"
+      end
+
       it "does not set the age in the simple eav attributes" do
         person = Person.create(:age=>97, :new_age=>98)
         person.simple_eav_attributes.should_not have_key :age
