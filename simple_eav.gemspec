@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*- 
 $:.push File.expand_path("../lib", __FILE__)
 require "version"
 
@@ -11,9 +11,9 @@ Gem::Specification.new do |s|
   s.summary     = %q{A simple alternative to acts_as_eav_model.}
   s.description = %q{A simple alternative to acts_as_eav_model that works with ActiveRecord without any monkey patching needed.  Acts_as_eav_model's gives a model the ability to have any number of custom attributes.  This project has the same goal.  The difference being maintaining utmost compatability with ActiveRecord::Base.}
 
-  s.files            = `git ls-files`.split("\n")
-  s.test_files       = `git ls-files -- {spec,features}/*`.split("\n")
-  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files            = [".gitignore", ".rvmrc", ".travis.yml", "Gemfile", "LICENSE", "README.rdoc", "Rakefile", "lib/simple_eav.rb", "lib/version.rb", "simple_eav.gemspec", "spec/db/schema.rb", "spec/lib/simple_eav_spec.rb", "spec/spec_helper.rb", "spec/support/child.rb", "spec/support/person.rb"]
+  s.test_files       = ["spec/db/schema.rb", "spec/lib/simple_eav_spec.rb", "spec/spec_helper.rb", "spec/support/child.rb", "spec/support/person.rb"]
+  s.executables      = []
   s.extra_rdoc_files = [ "README.rdoc" ]
   s.require_path     = "lib"
 
