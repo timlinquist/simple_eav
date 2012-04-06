@@ -54,10 +54,10 @@ This library, to my knowledge, is fully compatible with acts_as_eav_model.  This
 
 == Author
 
-{Tim Linquist}[http://github.com/timo3377]
+{Tim Linquist}[http://github.com/timlinquist]
 
 == Copyright
 
-Copyright (c) 2011 {Tim Linquist}[http://github.com/timo3377]
+Copyright (c) 2011 {Tim Linquist}[http://github.com/timlinquist]
 
-See {LICENSE}[http://github.com/timo3377/simple_eav] for details.
+See {LICENSE}[http://github.com/timlinquist/simple_eav] for details.
